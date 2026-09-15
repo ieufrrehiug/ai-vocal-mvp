@@ -1,0 +1,16 @@
+[
+  {
+    "id": "demo-neon-night",
+    "title": "霓虹练习曲",
+    "artist": "内置合成测试素材",
+    "durationLabel": "32 秒副歌",
+    "language": "普通话",
+    "range": "中音域",
+    "accent": "珊瑚红",
+    "license": "程序生成测试音频，可用于开发验证",
+    "guideVocal": "songs/demo/guide-vocal.wav",
+    "accompaniment": "songs/demo/accompaniment.wav",
+    "enabled": true,
+    "demo": true
+  }
+]
