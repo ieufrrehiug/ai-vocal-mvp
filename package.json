@@ -1,0 +1,22 @@
+{
+  "name": "ai-vocal-mvp",
+  "version": "0.1.0",
+  "private": true,
+  "license": "GPL-3.0-only",
+  "type": "module",
+  "description": "本地 AI 翻唱与歌声音色转换 Web MVP，编排 VoxCPM2、Seed-VC 和可选 SoulX-Singer。",
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "start": "node scripts/start-local.mjs",
+    "start:demo": "node src/server.js",
+    "assets": "node scripts/generate-demo-assets.mjs",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "multer": "^2.4.0"
+  }
+}
