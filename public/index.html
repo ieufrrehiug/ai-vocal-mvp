@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="上传你的声音样本，生成授权歌曲的 AI 音色翻唱试听。" />
+    <title>声刻 · AI 修歌 Agent</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css?v=5" />
+  </head>
+  <body>
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="声刻首页">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span>声刻</span>
+        <small>AI VOCAL</small>
+      </a>
+      <div class="engine-chip" id="engineChip">
+        <span class="engine-dot"></span>
+        <span id="engineLabel">正在检测引擎</span>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="hero-copy">
+          <div class="eyebrow"><span>01</span> 你的音色，原唱的演绎</div>
+          <h1>把这一段，<br /><em>唱成你的。</em></h1>
+          <p>选择已授权歌曲，上传 10–30 秒清晰声音样本。AI 继承原唱的旋律、节奏与表现，生成你的音色版本。</p>
+          <div class="hero-meta">
+            <span>零样本音色转换</span>
+            <span>自动混音</span>
+            <span>原始文件定时删除</span>
+          </div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="art-topline"><span><i></i> VOICE READY</span><b>00:32</b></div>
+          <div class="art-stage">
+            <div class="art-ring ring-one"></div>
+            <div class="art-ring ring-two"></div>
+            <div class="art-record"><span></span></div>
+            <div class="art-needle"></div>
+          </div>
+          <div class="art-wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="art-caption"><span>ORIGINAL PERFORMANCE</span><b>×</b><span>YOUR TRUE TIMBRE</span></div>
+        </div>
+      </section>
+
+      <section class="workspace" aria-label="生成工作台">
+        <div class="step-rail" aria-hidden="true">
+          <span class="active">01</span><i></i><span>02</span><i></i><span>03</span>
+        </div>
+
+        <div class="panel song-panel">
+          <div class="panel-heading">
+            <div><span class="step-kicker">STEP 01</span><h2>选择歌曲</h2></div>
+            <p>首批曲库只展示已验收素材</p>
+          </div>
+          <div class="song-grid" id="songGrid"><div class="skeleton"></div></div>
+          <label class="dropzone song-dropzone" id="songDropzone" for="songInput">
+            <input id="songInput" type="file" accept="audio/*,.wav,.mp3,.m4a,.aac,.flac,.ogg,.webm" />
+            <span class="upload-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5M5 14v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4" /></svg>
+            </span>
+            <strong id="songUploadTitle">拖入歌曲，或点击选择</strong>
+            <span id="songUploadHint">上传本地歌曲音频</span>
+            <div class="file-preview" id="songFilePreview" hidden>
+              <div><b id="songFileName"></b><small id="songFileSize"></small></div>
+              <button type="button" id="removeSongFile" aria-label="移除歌曲">×</button>
+            </div>
+          </label>
+          <label class="lyrics-field" for="lyricsInput">
+            <span><b>参考朗读文字</b><small>选填 · 最多 120 字</small></span>
+            <textarea id="lyricsInput" maxlength="120" rows="3" placeholder="用于生成音色参考朗读。可以填写歌词，但当前模式不会按文字纠正歌声中的错字或含糊发音。"></textarea>
+            <em>当前仅影响音色参考；歌词纠字尚未接入，最终吐字仍跟随原唱音频。</em>
+          </label>
+        </div>
+
+        <div class="panel upload-panel">
+          <div class="panel-heading">
+            <div><span class="step-kicker">STEP 02</span><h2>录入你的声音</h2></div>
+            <p>请录制 10–30 秒干净清唱，清唱比说话更容易保留你的音色</p>
+          </div>
+
+          <label class="dropzone" id="dropzone" for="voiceInput">
+            <input id="voiceInput" type="file" accept="audio/*,.wav,.mp3,.m4a,.aac,.flac,.ogg,.webm" />
+            <span class="upload-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5M5 14v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4" /></svg>
+            </span>
+            <strong id="uploadTitle">拖入声音，或点击选择</strong>
+            <span id="uploadHint">WAV / MP3 / M4A · 10–30 秒 · 最大 50MB</span>
+            <div class="file-preview" id="filePreview" hidden>
+              <div><b id="fileName"></b><small id="fileSize"></small></div>
+              <button type="button" id="removeFile" aria-label="移除文件">×</button>
+            </div>
+          </label>
+
+          <div class="mic-recorder">
+            <button type="button" id="micButton"><span class="mic-dot"></span><b id="micButtonText">使用麦克风录音</b></button>
+            <span id="micStatus">使用耳机或电脑麦克风直接录入</span>
+          </div>
+
+          <div class="recording-tips">
+            <div><span>01</span><p><b>保持安静</b>远离风扇与室内回声</p></div>
+            <div><span>02</span><p><b>正常发声</b>不要刻意模仿原唱音色</p></div>
+            <div><span>03</span><p><b>单人干声</b>不使用混响或背景音乐</p></div>
+          </div>
+
+          <label class="consent-row">
+            <input type="checkbox" id="consentInput" />
+            <span class="checkbox-ui"></span>
+            <span>我确认上传的是本人声音或已获得明确授权，并理解结果属于 AI 生成/辅助内容。</span>
+          </label>
+        </div>
+
+        <div class="action-row">
+          <div class="privacy-note"><span>↻</span><p>原始声音与中间文件将在 <b id="retentionText">24 小时</b>后清理</p></div>
+          <button class="generate-button" id="generateButton" disabled>
+            <span>生成我的副歌</span>
+            <svg viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5" /></svg>
+          </button>
+        </div>
+
+        <div class="panel progress-panel" id="progressPanel" hidden>
+          <div class="progress-visual">
+            <div class="disc"><span></span></div>
+            <div class="wave-bars" aria-hidden="true"></div>
+          </div>
+          <div class="progress-copy">
+            <span class="step-kicker">PROCESSING</span>
+            <h2 id="progressTitle">正在准备声音...</h2>
+            <p id="progressMessage">任务已进入单卡队列</p>
+            <div class="progress-track"><i id="progressBar"></i></div>
+            <small><b id="progressValue">0%</b><span>请保持页面打开</span></small>
+          </div>
+        </div>
+
+        <div class="panel result-panel" id="resultPanel" hidden>
+          <div class="result-heading">
+            <div><span class="step-kicker">STEP 03 · READY</span><h2>你的副歌已经生成</h2></div>
+            <span class="ai-label">AI 生成</span>
+          </div>
+          <div class="demo-warning" id="demoWarning" hidden>
+            当前是流程演示引擎：结果使用测试主唱，仅用于验证产品流程，并未克隆你的音色。
+          </div>
+          <div class="audio-results">
+            <article>
+              <div class="track-index">A</div>
+              <div class="track-copy"><span>成品版本</span><b>你的音色 × 原版伴奏</b></div>
+              <audio id="mixPlayer" controls preload="metadata"></audio>
+              <a id="mixDownload" class="download-button" download>下载 WAV</a>
+            </article>
+            <article>
+              <div class="track-index">V</div>
+              <div class="track-copy"><span>纯人声</span><b>AI 生成声轨</b></div>
+              <audio id="vocalPlayer" controls preload="metadata"></audio>
+              <a id="vocalDownload" class="download-button secondary" download>下载 WAV</a>
+            </article>
+          </div>
+          <button class="restart-button" id="restartButton">再生成一版</button>
+        </div>
+      </section>
+    </main>
+
+    <footer><span>声刻 AI VOCAL</span><p>只处理拥有合法授权的歌曲与声音。生成效果受音域、录音质量和模型能力影响。</p></footer>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script defer src="./app.js?v=5"></script>
+  </body>
+</html>
